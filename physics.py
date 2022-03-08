@@ -1,16 +1,22 @@
 import numpy as np
 
-grade = 8
+grade = 9.2
 weight_rider = 75
-weight_else = 8.5
+weight_else = 9
 weight_total = weight_rider + weight_else
 crr = 0.005 # rolling resistance
 rho = 0.076537 # air density
-a = 0.509 # frontal area
-cd = 0.63 # coef of drag
-loss_dt = 2 # drive train loss
+a = 0.609 # frontal area
+cd = 0.8 # coef of drag
+loss_dt = 4 # drive train loss
 
-v_kmh = 30 
+
+
+distance = 1.78 # km 
+time = (7/60)
+speed = distance /time
+
+v_kmh = speed 
 v =  v_kmh / 3.6 # velocity parameter, in m/s
 
 
@@ -21,5 +27,4 @@ f_resist = f_gravity + f_rolling + f_drag
 p_wheel = f_resist * v 
 p_legs = (1 - (loss_dt/100))**-1 * (f_resist) * v
 
-
-print(p_legs)
+print('power =', p_legs, 'speed =', v_kmh, 'cda =', cd * a )

@@ -1,2 +1,5 @@
 
 strava_api_details.py
+keys.JSON
+*.pyc
+segment/*
