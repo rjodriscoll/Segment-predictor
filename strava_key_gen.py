@@ -18,4 +18,3 @@ with open("keys.JSON") as f:
 access_token = json_data['access_token']
 
 
-access_token = '0c13d93fbeae34cb1509160c67860939e910b470' 
