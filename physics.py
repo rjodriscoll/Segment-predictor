@@ -73,13 +73,13 @@ def converge_on_speed_given_power(target_power):
         )
 
         if power >= lower and power <= upper:
-            return speed
+            return speed    
 
 
-for p in range(200, 600, 5):
+for speed in range(1, 40, 1):
     print('~' * 200)
-    print(p)
-    speed = converge_on_speed_given_power(p)
+
+    # speed = converge_on_speed_given_power(p)
     
     power = get_power_given_speed(
         grade=grade,
@@ -102,13 +102,13 @@ for p in range(200, 600, 5):
         "power =",
         round(power),
         "speed =",
-        round(speed, 2),
+        round(speed, 5),
         "cda =",
         round(coef_drag * frontal_area, 2),
         "this rider covers",
         distance,
         "km in",
-        time_mins,
+        round(time_mins,2),
         "mins"
     )
 
