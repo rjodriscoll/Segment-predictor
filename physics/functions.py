@@ -1,17 +1,5 @@
 import numpy as np
 
-# we need to be able to calculate the power required for a speed. This is hard because velovity is needed for f_drag
-distance = 10
-time_mins = 55
-rider_weight = 75
-frontal_area = 0.609
-coef_drag = 0.7
-grade = 7
-weight_else = 8
-coef_rolling_resistance = 0.005
-air_density = 0.076537
-coef_drag = 0.7
-drive_losses = 4
 
 
 def get_power_given_speed(
@@ -43,11 +31,17 @@ def get_power_given_speed(
     return power
 
 
-# the below function is needed to calculate the power required for a speed or a particular segment. This is becuase the user will provide one power and we will calculate the speed for that segment
-def converge_on_speed_given_power(target_power):
+def converge_on_speed_given_power(target_power:float, grade: float,
+    rider_weight: float,
+    weight_else: float,
+    coef_rolling_resistance: float,
+    air_density: float,
+    frontal_area: float,
+    coef_drag: float,
+    drive_losses: float):
 
     lower, upper = target_power * 0.99, target_power * 1.01
-    speed_min, speed_max = 1, 100
+    speed_min, speed_max = 1, 60
     speed = 1
     power = 1
 
@@ -75,41 +69,5 @@ def converge_on_speed_given_power(target_power):
         if power >= lower and power <= upper:
             return speed    
 
-
-for speed in range(1, 40, 1):
-    print('~' * 200)
-
-    # speed = converge_on_speed_given_power(p)
-    
-    power = get_power_given_speed(
-        grade=grade,
-        rider_weight=rider_weight,
-        weight_else=weight_else,
-        coef_rolling_resistance=coef_rolling_resistance,
-        air_density=air_density,
-        frontal_area=frontal_area,
-        coef_drag=coef_drag,
-        drive_losses=drive_losses,
-        speed=speed,
-    )
-   
-    time = distance/speed
-    time_seconds = 60 * 60 * time 
-    time_mins = time_seconds /60 
-    
-
-    print(
-        "power =",
-        round(power),
-        "speed =",
-        round(speed, 5),
-        "cda =",
-        round(coef_drag * frontal_area, 2),
-        "this rider covers",
-        distance,
-        "km in",
-        round(time_mins,2),
-        "mins"
-    )
-
-    print('~' * 200)
+        if speed > 59 or speed < 2: 
+            return speed

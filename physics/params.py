@@ -1,0 +1,11 @@
+distance = 10
+time_mins = 55
+rider_weight = 75
+frontal_area = 0.609
+coef_drag = 0.7
+grade = 7
+weight_else = 8
+coef_rolling_resistance = 0.005
+air_density = 0.076537
+coef_drag = 0.7
+drive_losses = 4
