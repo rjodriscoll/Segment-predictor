@@ -11,10 +11,7 @@ server = app.server
 app.layout = html.Div([
     html.H2('Strava segment predictor'),
     html.P("This app will take the segment id of a strava segment and estimate the time it takes to complete it across a range of w/kg values."),
-    dcc.Dropdown(['LA', 'NYC', 'MTL'],
-        'LA',
-        id='dropdown'
-    ),
+    dcc.Input(id="Segment id", type="text", placeholder="enter a segment id", style={'marginRight':'10px'}),
     html.Div(id='display-value')
 ])
 
