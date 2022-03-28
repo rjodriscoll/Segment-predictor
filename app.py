@@ -9,7 +9,8 @@ app = Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
 
 app.layout = html.Div([
-    html.H2('Hello World'),
+    html.H2('Strava segment predictor'),
+    html.P("This app will take the segment id of a strava segment and estimate the time it takes to complete it across a range of w/kg values."),
     dcc.Dropdown(['LA', 'NYC', 'MTL'],
         'LA',
         id='dropdown'
