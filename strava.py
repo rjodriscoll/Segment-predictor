@@ -4,6 +4,7 @@ from requests.structures import CaseInsensitiveDict
 import json
 import polyline
 import numpy as np
+import time
 
 from strava_key_gen import access_token
 from physics.params import rider_weight,frontal_area,coef_drag,weight_else,coef_rolling_resistance,air_density,coef_drag,drive_losses
@@ -18,7 +19,7 @@ class wkgCalculation:
         self._is_processed = self._is_already_processed()
         self._strava_json = self._return_segment_from_api()
         self._lat_lon = self._get_lat_lon()
-        
+        self._elev_lat_lon = self._api_caller()
         
     def _is_already_processed(self):
         return str(self._id) in os.listdir('data')
@@ -62,11 +63,29 @@ class wkgCalculation:
         
         return string_lists
 
+    def _get_elev_lat_lon(call_string):
+        url = f"https://api.opentopodata.org/v1/eudem25m?locations={call_string}"
+        resp = requests.get(url)
+        resp = resp.json()['results']
+        result_list = []
+        for i in range(len(resp)):
+            result_list.append([resp[i]['elevation'], resp[i]['location']['lat'], resp[i]['location']['lng']])
+        return result_list
+
+
     def _api_caller(self):
-        pass
+        if not self._is_processed:
+            calls =  self._build_api_call()
+            result_list = []
+            for call in calls:
+                time.sleep(1) # sleep for 1 second to prevent api limit
+                result_list += self._get_elev_lat_lon(call)
+            ell_np=np.array([np.array(xi) for xi in result_list])
+        else:
+            ell_np = np.load('data/' + str(id)+'/elevation_lat_lon.npy')
+        return ell_np
+
     
-    def _retrieve(self):
-        pass
 
     def _plot(self):
         pass
